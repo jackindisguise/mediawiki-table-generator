@@ -17,13 +17,28 @@ function text2table(text, impliedHeader = false) {
 
 function convert() {
 	const src = $("#source").val();
-	const impliedHeader = $("impliedHeader").checked;
-	const result = text2table(src);
+	const impliedHeader = $("#impliedHeader")[0].checked;
+	const result = text2table(src, impliedHeader);
 	$("#target").val(result.join("\n"));
 	$("#target")[0].dispatchEvent(new Event("change"));
 }
 
 $(() => {
+	// save and load checkmarks
+	const inputs = $("input[type='checkbox']");
+	for (let input of inputs) {
+		// load stored values
+		const stored = localStorage.getItem(input.id);
+		const bool = stored === "false" ? false : true;
+		input.checked = bool;
+
+		// listen for changes
+		input.onclick = () => {
+			localStorage.setItem(input.id, input.checked);
+			convert();
+		};
+	}
+
 	// enable tabs
 	const textareas = $("textarea");
 	for (let area of textareas) {
@@ -47,6 +62,10 @@ $(() => {
 		// listen for onchange
 		area.onchange = () => {
 			localStorage.setItem(area.id, $(area).val());
+		};
+
+		area.oninput = () => {
+			convert();
 		};
 	}
 
