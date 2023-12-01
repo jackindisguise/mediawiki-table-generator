@@ -1,8 +1,10 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const delimiter = "\t";
 const $ = require("jquery");
-function text2table(text, impliedHeader = false) {
-	const table = ["{|"];
+function text2table(text, impliedHeader = false, classes) {
+	let initializer = "{|";
+	if (classes) initializer = `${initializer} class='${classes}'`;
+	const table = [initializer];
 	const lines = text.split(/\r?\n/g);
 	for (let i = 0; i < lines.length; i++) {
 		if (i > 0) table.push("|-");
@@ -18,23 +20,37 @@ function text2table(text, impliedHeader = false) {
 function convert() {
 	const src = $("#source").val();
 	const impliedHeader = $("#impliedHeader")[0].checked;
-	const result = text2table(src, impliedHeader);
+	const classes = $("#classes").val();
+	const result = text2table(src, impliedHeader, classes);
 	$("#target").val(result.join("\n"));
 	$("#target")[0].dispatchEvent(new Event("change"));
 }
 
 $(() => {
 	// save and load checkmarks
-	const inputs = $("input[type='checkbox']");
+	const checkboxes = $("input[type='checkbox']");
+	for (let box of checkboxes) {
+		// load stored values
+		const stored = localStorage.getItem(box.id);
+		const bool = stored === "false" ? false : true;
+		box.checked = bool;
+
+		// listen for changes
+		box.onclick = () => {
+			localStorage.setItem(box.id, box.checked);
+			convert();
+		};
+	}
+
+	const inputs = $("input[type='text']");
 	for (let input of inputs) {
 		// load stored values
 		const stored = localStorage.getItem(input.id);
-		const bool = stored === "false" ? false : true;
-		input.checked = bool;
+		if (stored !== undefined) input.value = stored;
 
 		// listen for changes
-		input.onclick = () => {
-			localStorage.setItem(input.id, input.checked);
+		input.oninput = () => {
+			localStorage.setItem(input.id, input.value);
 			convert();
 		};
 	}
