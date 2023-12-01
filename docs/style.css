@@ -7,13 +7,14 @@ body{
 .container{
 	width:80%;
 	margin:0 auto;
-}
-
-.windowTitle{
-	font-size:300%;
+	display:flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: start;
 }
 
 .window{
+	width:45%;
 	text-align:center;
 	padding:10px;
 	border:1px solid #000;
@@ -32,14 +33,14 @@ button{
 .window textarea{
 	box-sizing: border-box;
 	width:100%;
-	height:200px;
+	height:500px;
 	margin:0px;
 	padding:5px;
 	border:0px;
 	border-radius:10px;
 	text-align:left;
 	display:block;
-	resize:none;
+	resize:vertical;
 }
 
 .window .title{
@@ -54,4 +55,8 @@ button{
 	font-size:500%;
 	text-align:center;
 	margin-bottom:8px;
+}
+
+.window .options{
+	line-height:30px;
 }
