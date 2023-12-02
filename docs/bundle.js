@@ -67,6 +67,7 @@ $(() => {
 					area.selectionStart,
 					"end"
 				);
+				convert();
 				return false; //prevent default action
 			}
 		};
