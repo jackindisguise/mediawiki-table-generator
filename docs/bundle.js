@@ -27,6 +27,7 @@ function convert() {
 }
 
 $(() => {
+	convert();
 	// save and load checkmarks
 	const checkboxes = $("input[type='checkbox']");
 	for (let box of checkboxes) {
@@ -56,7 +57,7 @@ $(() => {
 	}
 
 	// enable tabs
-	const textareas = $("textarea");
+	const textareas = $("textarea#source");
 	for (let area of textareas) {
 		// listen for tabs
 		area.onkeydown = (e) => {
@@ -77,17 +78,13 @@ $(() => {
 		if (stored) $(area).val(stored);
 
 		// listen for onchange
-		area.onchange = () => {
-			localStorage.setItem(area.id, $(area).val());
-		};
-
 		area.oninput = () => {
+			localStorage.setItem(area.id, $(area).val());
 			convert();
 		};
 	}
 
-	// listen for clicks
-	document.getElementById("convert").onclick = convert;
+	convert();
 });
 
 },{"jquery":2}],2:[function(require,module,exports){
