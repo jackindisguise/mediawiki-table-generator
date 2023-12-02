@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html>
-	<title>Wikimedia Table Generator</title>
+	<title>MediaWiki Table Generator</title>
 	<head>
 		<link rel="stylesheet" href="style.css"/>
 		<script src="bundle.js"></script>
 	</head>
 	<body>
-		<div class="options window" style="width: 500px; margin:0 auto;">
-			<input id='impliedHeader' type="checkbox"></input> First row is header.<br/>
-			Delimiter: <input id='delimiter' type="text" disabled="disabled" value="\t"/><br/>
-			Optional table classes: <input id="classes" type="text" placeholder="wikitable etc etc"></input>
-		</div>
-		<br/>
 		<div class="container">
 			<div class="window">
 				<div class="title">Plaintext</div>
@@ -19,8 +13,17 @@
 				<!--<button id='convert'>Convert</button>-->
 			</div>
 			<div class="window">
-				<div class="title">Wikimedia</div>
+				<div class="title">MediaWiki</div>
 				<textarea id="target" readonly></textarea>
+			</div>
+		</div>
+		<br/>
+		<div class="options window" style="width: 75%; margin:0 auto;">
+			<div class="title">Options</div>
+			<div style="border-radius:25px; background-color:rgba(255,255,255,0.75); padding:10px;">
+				<input id='impliedHeader' type="checkbox"></input> First row is header.<br/>
+				Delimiter: <input id='delimiter' type="text" disabled="disabled" value="\t"/><br/>
+				Optional table classes: <input id="classes" type="text" placeholder="wikitable etc etc"></input>
 			</div>
 		</div>
 	</body>
