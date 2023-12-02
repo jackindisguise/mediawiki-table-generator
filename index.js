@@ -60,14 +60,17 @@ $(() => {
 	for (let area of textareas) {
 		// listen for tabs
 		area.onkeydown = (e) => {
-			if (e.keyCode === 9) {
+			if (e.keyCode === 8 || e.keyCode === 46) {
+				area.dispatchEvent(new Event("input"));
+				return true;
+			} else if (e.keyCode === 9) {
 				area.setRangeText(
 					"\t",
 					area.selectionStart,
 					area.selectionStart,
 					"end"
 				);
-				convert();
+				area.dispatchEvent(new Event("input"));
 				return false; //prevent default action
 			}
 		};
